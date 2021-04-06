@@ -33,7 +33,7 @@ func main() {
 
 	// init router
 	m := mux.NewRouter()
-	m.HandleFunc("/", ctrl.GetPlaceByIdHandler)
+	m.HandleFunc("/{id}", ctrl.GetPlaceByIdHandler)
 
 	Run(m)
 }
