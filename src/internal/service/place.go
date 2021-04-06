@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"log"
 
 	"court.com/src/internal/entity/dto"
@@ -8,15 +9,15 @@ import (
 )
 
 type PlaceService interface {
-	GetPlaceById(id int64) dto.PlaceDtl
+	GetPlaceById(ctx context.Context, id int64) dto.PlaceDtl
 }
 
 type PlaceServiceImpl struct {
 	r repo.PlaceRepo
 }
 
-func (p *PlaceServiceImpl) GetPlaceById(id int64) dto.PlaceDtl {
-	r, err := p.r.GetPlaceById(id)
+func (p *PlaceServiceImpl) GetPlaceById(ctx context.Context, id int64) dto.PlaceDtl {
+	r, err := p.r.GetPlaceById(ctx, id)
 	if err != nil {
 		log.Println(err)
 		return dto.PlaceDtl{}

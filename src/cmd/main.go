@@ -13,6 +13,7 @@ import (
 	"court.com/src/internal/repo"
 	"court.com/src/internal/service"
 	"court.com/src/pkg/mongodb"
+	"court.com/src/pkg/redis"
 	"github.com/gorilla/mux"
 )
 
@@ -22,9 +23,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	redisCli := redis.Init()
 
 	// init repo
-	repo := repo.New(cli)
+	repo := repo.New(cli, redisCli)
 
 	// init service
 	placeSvc := service.New(repo)

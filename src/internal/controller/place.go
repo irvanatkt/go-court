@@ -17,7 +17,7 @@ func (c *Controller) GetPlaceByIdHandler(w http.ResponseWriter, r *http.Request)
 		w.Write([]byte("invalid id"))
 		return
 	}
-	result := c.placeSvc.GetPlaceById(int64(ID))
+	result := c.placeSvc.GetPlaceById(r.Context(), int64(ID))
 	w.Write([]byte(fmt.Sprint(result.ID)))
 	w.WriteHeader(http.StatusOK)
 	return

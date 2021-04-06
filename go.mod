@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/aws/aws-sdk-go v1.38.13 // indirect
+	github.com/go-redis/redis/v8 v8.8.0
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/klauspost/compress v1.11.13 // indirect
