@@ -35,7 +35,7 @@ func (p *PlaceRepoImpl) GetPlaceById(ctx context.Context, id int64) (*dao.PlaceD
 	}
 
 	// get from db if empty
-	courts := p.mongoCli.Database("court").Collection("courts")
+	courts := p.mongoCli.Database(constants.CourtDB).Collection(constants.CourtsCollection)
 	qId := bson.D{{"id", id}}
 	err := courts.FindOne(ctx, qId).Decode(&result)
 	if err != nil {
