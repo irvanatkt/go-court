@@ -4,8 +4,8 @@ import "court.com/src/internal/entity/dto"
 
 type PlaceDtl struct {
 	ID        int64   `json:"id"`
-	Latitude  float32 `json:"lat"`
-	Longitude float32 `json:"long"`
+	Latitude  float64 `json:"lat" bson:"lat"`
+	Longitude float64 `json:"long" bson:"long"`
 }
 
 func (p PlaceDtl) ToDTO() dto.PlaceDtl {
