@@ -13,7 +13,7 @@ type PlaceService interface {
 }
 
 type PlaceServiceImpl struct {
-	r repo.PlaceRepo
+	r repo.LocationRepo
 }
 
 func (p *PlaceServiceImpl) GetPlaceById(ctx context.Context, id int64) dto.PlaceDtl {
@@ -25,6 +25,6 @@ func (p *PlaceServiceImpl) GetPlaceById(ctx context.Context, id int64) dto.Place
 	return r.ToDTO()
 }
 
-func New(pRepo repo.PlaceRepo) PlaceService {
+func New(pRepo repo.LocationRepo) PlaceService {
 	return &PlaceServiceImpl{pRepo}
 }

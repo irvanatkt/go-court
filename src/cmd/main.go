@@ -30,12 +30,14 @@ func main() {
 
 	// init service
 	placeSvc := service.New(repo)
+	locSvc := service.NewLocationSvc(repo)
 
-	ctrl := controller.Init(placeSvc)
+	ctrl := controller.Init(placeSvc, locSvc)
 
 	// init router
 	m := mux.NewRouter()
-	m.HandleFunc("/{id}", ctrl.GetPlaceByIdHandler)
+	m.HandleFunc("/place/{id}", ctrl.GetPlaceByIdHandler)
+	m.HandleFunc("/gymnasium/{id}", ctrl.GetGymnasiumByID)
 
 	Run(m)
 }
