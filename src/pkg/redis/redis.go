@@ -2,17 +2,19 @@ package redis
 
 import (
 	"context"
+	"fmt"
 	"log"
 
+	config "court.com/src/pkg/utils/conf"
 	"github.com/go-redis/redis/v8"
 )
 
-func Init() *redis.Client {
+func Init(conf config.Redis) *redis.Client {
 	cli := redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
-		DB:   0,
+		Addr: fmt.Sprintf("%s:%d", conf.Host, conf.Port),
+		DB:   conf.DB,
 	})
-	cmd := cli.Ping(context.Background())
-	log.Println(cmd.Result())
+	ping, err := cli.Ping(context.Background()).Result()
+	log.Printf("Pinging to redis %s, err: %v", ping, err)
 	return cli
 }

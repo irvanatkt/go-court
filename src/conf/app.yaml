@@ -1,0 +1,13 @@
+env: "dev"
+
+server:
+  host: 127.0.0.1
+  port: 8080
+
+repo:
+  mongodb:
+    url: "mongodb://localhost:27017"
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    db: 0

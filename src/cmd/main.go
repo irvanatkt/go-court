@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -14,16 +15,24 @@ import (
 	"court.com/src/internal/service"
 	"court.com/src/pkg/mongodb"
 	"court.com/src/pkg/redis"
+	config "court.com/src/pkg/utils/conf"
 	"github.com/gorilla/mux"
 )
 
 func main() {
+
+	// init config
+	conf, err := config.Init()
+	if err != nil {
+		log.Fatal("Error config", err)
+	}
+
 	// init pkg
-	cli, err := mongodb.InitClient()
+	cli, err := mongodb.InitClient(conf.Repo.MongoDB)
 	if err != nil {
 		log.Fatal(err)
 	}
-	redisCli := redis.Init()
+	redisCli := redis.Init(conf.Repo.Redis)
 
 	// init repo
 	repo := repo.New(cli, redisCli)
@@ -39,16 +48,16 @@ func main() {
 	m.HandleFunc("/place/{id}", ctrl.GetPlaceByIdHandler)
 	m.HandleFunc("/gymnasium/{id}", ctrl.GetGymnasiumByID)
 
-	Run(m)
+	Run(conf, m)
 }
 
-func Run(r *mux.Router) {
+func Run(conf *config.Config, r *mux.Router) {
 	var wait time.Duration
 	flag.DurationVar(&wait, "graceful-timeout", time.Second*15, "the duration for which the server gracefully wait for existing connections to finish - e.g. 15s or 1m")
 	flag.Parse()
 
 	srv := &http.Server{
-		Addr: "0.0.0.0:8080",
+		Addr: fmt.Sprintf("%s:%d", conf.Server.Host, conf.Server.Port),
 		// Good practice to set timeouts to avoid Slowloris attacks.
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
