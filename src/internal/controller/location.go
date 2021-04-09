@@ -24,7 +24,7 @@ func (c *Controller) GetPlaceByIdHandler(w http.ResponseWriter, r *http.Request)
 	return
 }
 
-func (c *Controller) GetGymnasiumByID(w http.ResponseWriter, r *http.Request) {
+func (c *Controller) GetGymnasiumByIDHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	strID := vars["id"]
 	ID, err := strconv.Atoi(strID)

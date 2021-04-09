@@ -23,6 +23,7 @@ func Init() (*Config, error) {
 		}
 		return nil, err
 	}
+
 	var conf Config
 	if err := viper.Unmarshal(&conf); err != nil {
 		log.Println(err)
